@@ -5,5 +5,6 @@
 module.exports = {
   DEFAULT_PROTOCOL:"http://",
   SERVER_IP:"192.168.1.11",
-  PORT:80
+  PORT:80,
+  HTTPS_PORT:443
 };

@@ -1,6 +1,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 global.config = require('./config/config')
 config.PORT=config.PORT||80
+config.HTTPS_PORT=config.HTTPS_PORT||443
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -10,7 +11,7 @@ const httpsServer=https.createServer({
   key:fs.readFileSync('config/certs/server.key'),
   cert:fs.readFileSync('config/certs/server.crt')
 },app)
-httpsServer.listen(443)
+httpsServer.listen(config.HTTPS_PORT)
 
 const httpsIO = require('socket.io')(httpsServer)
 const workerMap={}
@@ -123,5 +124,6 @@ function socketFun(socket,tab){
 }
 http.listen(config.PORT, () => {
   console.log(`Socket.IO server running at http://localhost:${config.PORT}/`);
+  console.log(`Socket.IO server running at https://localhost:${config.HTTPS_PORT}/`);
 });
 
